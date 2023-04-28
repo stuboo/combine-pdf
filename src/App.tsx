@@ -5,6 +5,11 @@ import ListFiles from './features/ListFiles';
 import PDFSelections from './features/PDFCombine';
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
+import { Storage } from "@aws-amplify/storage"
+
+await Storage.get('test.txt', { 
+    level: 'public'
+});
 
 function App() {
 
