@@ -1,7 +1,5 @@
-import { RootState } from "./../../app/store";
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { PDF } from "../../app/types";
-import client from "../../api/client";
 import mergePDF from "../../common/pdf-lib";
 import books from '../../app/books.json';
 
