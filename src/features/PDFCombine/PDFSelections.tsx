@@ -1,7 +1,7 @@
-import React, { useCallback, useState } from 'react'
+import { useCallback, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import useCopyToClipboard from '../../common/hooks/useCopyToClipboard';
-import { clearSelection, combinePDFs, reorderSelection, unSelectPDF } from '../ListFiles/pdfsSlice';
+import { clearSelection, combinePDFs, reorderSelection } from '../ListFiles/pdfsSlice';
 import { toast } from 'react-toastify';
 import PDFFileItem from './PDFFileItem';
 import { PDF } from '../../app/types';

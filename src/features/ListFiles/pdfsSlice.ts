@@ -1,8 +1,7 @@
-import { RootState } from "./../../app/store";
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { PDF } from "../../app/types";
-import client from "../../api/client";
 import mergePDF from "../../common/pdf-lib";
+import books from '../../app/books.json';
 
 interface PDFState {
   pdfs: PDF[];
@@ -29,9 +28,11 @@ const initialState: PDFState = {
 };
 
 export const fetchPDFs = createAsyncThunk("pdfs/fetchPDFs", async () => {
-  const response = await client.get("stuboo/tools/main/urogyn_pdfs.json");
+  // const response = await client.get("stuboo/tools/main/urogyn_pdfs.json");
 
-  return response.data as PDF[];
+  // return response.data as PDF[];
+  const pdfs = books;
+  return pdfs as PDF[];
 });
 
 export const combinePDFs = createAsyncThunk(
@@ -86,18 +87,18 @@ export const pdfsSlice = createSlice({
       });
     },
 
-    reorderSelection: (state, { payload } : PayloadAction<{ sourcePDF: PDF, targetPDF: PDF }>) => {
-        const { sourcePDF, targetPDF } = payload
-        
-        // Find indexes
-        const targetIndex = state.selectedPdfs.findIndex(_pdf => _pdf.filename == targetPDF.filename);
-        const sourceIndex = state.selectedPdfs.findIndex(_pdf => _pdf.filename == sourcePDF.filename);
+    reorderSelection: (state, { payload }: PayloadAction<{ sourcePDF: PDF, targetPDF: PDF }>) => {
+      const { sourcePDF, targetPDF } = payload
 
-        const _selectedPdfs = state.selectedPdfs;
-        _selectedPdfs.splice(sourceIndex, 1);
-        _selectedPdfs.splice(targetIndex, 0, sourcePDF);
+      // Find indexes
+      const targetIndex = state.selectedPdfs.findIndex(_pdf => _pdf.filename == targetPDF.filename);
+      const sourceIndex = state.selectedPdfs.findIndex(_pdf => _pdf.filename == sourcePDF.filename);
 
-        state.selectedPdfs = _selectedPdfs;
+      const _selectedPdfs = state.selectedPdfs;
+      _selectedPdfs.splice(sourceIndex, 1);
+      _selectedPdfs.splice(targetIndex, 0, sourcePDF);
+
+      state.selectedPdfs = _selectedPdfs;
     },
 
     extractLanguages: (state) => {
@@ -110,11 +111,11 @@ export const pdfsSlice = createSlice({
       state.languages = languages;
     },
 
-    setFilter: (state, { payload } : PayloadAction<string>) => {
+    setFilter: (state, { payload }: PayloadAction<string>) => {
       state.filter = payload;
     },
 
-    setSearchTerm: (state, { payload } : PayloadAction<string>) => {
+    setSearchTerm: (state, { payload }: PayloadAction<string>) => {
       state.searchterm = payload;
     }
   },
